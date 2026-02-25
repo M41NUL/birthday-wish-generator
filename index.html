@@ -165,8 +165,8 @@
         <img id="mascot" class="mascot-gif" src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/58e9173a-221a-4607-903f-7b330e880630.gif">
         <div id="chat-container"></div>
         <div class="btn-group hidden" id="question-btns">
-            <button class="story-btn" onclick="nextStep()">I Promise </button>
-            <button class="story-btn no" id="no-btn" onmouseover="dodgeNo()">No </button>
+            <button class="story-btn" onclick="nextStep()">I Promise🥹🫶 </button>
+            <button class="story-btn no" id="no-btn" onmouseover="dodgeNo()">No🥺 </button>
         </div>
     </div>
 
@@ -290,22 +290,23 @@
         let mascot = document.getElementById('mascot');
 
         // English Texts
-        const stepsEn = [
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/58e9173a-221a-4607-903f-7b330e880630.gif", texts: [`Hi, ${urlName}! `, `Another year of you being the most beautiful soul I know. `] },
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/7608cb9d-41dc-410e-804f-dfc559897d2d.gif", texts: [`I have something small, but its filled with all my heart... `, `Do you promise to keep it safe? `], showButtons: true },
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/88020618-b11d-4e60-94a6-d6624274d08a.gif", texts: [`Now, take a deep breath and just let go... `, `Close your eyes and count to 5 for me. `], countdown: true },
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Milk%20And%20Mocha%20Sticker%20%E2%80%93%20Milk%20and%20mocha%20%E2%80%93%20GIF-ek%20felfedez%C3%A9se%20%C3%A9s%20megoszt%C3%A1sa.gif", texts: [`Oh no... it seems the universe isn't ready to let go of such a precious gift yet! `, `It got lost somewhere in the stars... `, `Life is so unfair sometimes, isn't it? `] },
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Kiss%20GIF%20-%20Kiss%20-%20Discover%20%26%20Share%20GIFs.gif", texts: [`But then I realized... the gift was never a thing, it was always YOU. `, `You are my favorite piece of magic in this world! `], finishPrank: true }
-        ];
+        // English Texts
+const stepsEn = [
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/58e9173a-221a-4607-903f-7b330e880630.gif", texts: [`Hi, ${urlName}! ✨👋`, `Another year of you being the most beautiful soul I know. 🤍🌸`] },
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/7608cb9d-41dc-410e-804f-dfc559897d2d.gif", texts: [`I have something small, but it’s filled with all my heart... 🥺💌`, `Do you promise to keep it safe? 🤞🏻🎀`], showButtons: true },
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/88020618-b11d-4e60-94a6-d6624274d08a.gif", texts: [`Now, take a deep breath and just let go... 🌬️🫧`, `Close your eyes and count to 5 for me. 🙈⏳`], countdown: true },
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Milk%20And%20Mocha%20Sticker%20%E2%80%93%20Milk%20and%20mocha%20%E2%80%93%20GIF-ek%20felfedez%C3%A9se%20%C3%A9s%20megoszt%C3%A1sa.gif", texts: [`Oh no... it seems the universe isn't ready to let go of such a precious gift yet! 🥺🌌`, `It got lost somewhere in the stars... 🌠☁️`, `Life is so unfair sometimes, isn't it? 🥀💔`] },
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Kiss%20GIF%20-%20Kiss%20-%20Discover%20%26%20Share%20GIFs.gif", texts: [`But then I realized... the gift was never a thing, it was always YOU. 🥹🎀`, `You are my favorite piece of magic in this world! ✨🤍`], finishPrank: true }
+];
 
-        // Banglish Texts
-        const stepsBn = [
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/58e9173a-221a-4607-903f-7b330e880630.gif", texts: [`, ${urlName}! `, `Amar dekha prithibir sobcheye sundor moner manush tumi. `] },
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/7608cb9d-41dc-410e-804f-dfc559897d2d.gif", texts: [`Tomar jonno chotto kintu onek valobashay vora akta gift ache... `, `Kotha dao jotno kore rakhbe? `], showButtons: true },
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/88020618-b11d-4e60-94a6-d6624274d08a.gif", texts: [`Ebar lomba akta nisshash nao... `, `Chokh bondho kore amr jonno 5 porjonto gono. `], countdown: true },
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Milk%20And%20Mocha%20Sticker%20%E2%80%93%20Milk%20and%20mocha%20%E2%80%93%20GIF-ek%20felfedez%C3%A9se%20%C3%A9s%20megoszt%C3%A1sa.gif", texts: [`Eki... ei prithibi bodhoy eto sundor gift ta tomake dite chachche na! `, `Tarader deshe kothay jeno haraye gelo... `, `Jibon ta majhe majhe onek nishthur, tai na? `] },
-            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Kiss%20GIF%20-%20Kiss%20-%20Discover%20%26%20Share%20GIFs.gif", texts: [`Kintu pore bujhlam... ashol gift to kono jinish na, ashol gift chila TUMI nijey. `, `Tumi amr prithibir sobcheye dami magic! `], finishPrank: true }
-        ];
+// Banglish Texts
+const stepsBn = [
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/58e9173a-221a-4607-903f-7b330e880630.gif", texts: [`Hello, ${urlName}! ✨👋`, `Amar dekha prithibir sobcheye sundor moner manush tumi. 🤍🌸`] },
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/7608cb9d-41dc-410e-804f-dfc559897d2d.gif", texts: [`Tomar jonno chotto kintu onek valobashay vora akta gift ache... 🥺💌`, `Kotha dao jotno kore rakhbe? 🤞🏻🎀`], showButtons: true },
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/88020618-b11d-4e60-94a6-d6624274d08a.gif", texts: [`Ebar lomba akta nisshash nao... 🌬️🫧`, `Chokh bondho kore amr jonno 5 porjonto gono. 🙈⏳`], countdown: true },
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Milk%20And%20Mocha%20Sticker%20%E2%80%93%20Milk%20and%20mocha%20%E2%80%93%20GIF-ek%20felfedez%C3%A9se%20%C3%A9s%20megoszt%C3%A1sa.gif", texts: [`Eki... ei prithibi bodhoy eto sundor gift ta tomake dite chachche na! 🥺🌌`, `Tarader deshe kothay jeno haraye gelo... 🌠☁️`, `Jibon ta majhe majhe onek nishthur, tai na? 🥀💔`] },
+    { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Kiss%20GIF%20-%20Kiss%20-%20Discover%20%26%20Share%20GIFs.gif", texts: [`Kintu pore bujhlam... ashol gift to kono jinish na, ashol gift chila TUMI nijey. 🥹🎀`, `Tumi amr prithibir sobcheye dami magic! ✨🤍`], finishPrank: true }
+];
 
         const activeSteps = urlLang === 'bn' ? stepsBn : stepsEn;
 
@@ -561,5 +562,6 @@
             });
         }
     </script>
+
 
 
