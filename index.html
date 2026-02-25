@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<!-- =============================================
+     BIRTHDAY WISH GENERATOR - Premium Birthday Tool 2026
+     =============================================
+     Developer     : MAINUL ISLAM
+     Version       : 1.0.1
+     Contact       : +8801308850528
+     Email         : githubmainul@gmail.com
+     Telegram      : @mdmainulislaminfo
+     GitHub        : M41NUL
+     Website       : https://github.com/M41NUL/birthday-wish-generator
+     Copyright     : © 2026 Birthday Wish Generator
+     License       : MIT License (Free for personal use)
+     ============================================= -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Premium Birthday Wish</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Hind+Siliguri:wght@500;600;700&family=Poppins:wght@400;600;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #ffdde1, #f8bbd0);
+            background-size: 400% 400%;
+            animation: movingGradient 15s ease infinite;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            overflow: hidden; color: #d81b60; position: relative;
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", 'Poppins', 'Hind Siliguri', sans-serif;
+        }
+        @keyframes movingGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        #floating-bg-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; }
+        .bg-float-icon { position: absolute; bottom: -20px; font-size: 15px; opacity: 0.3; animation: floatUp linear infinite; }
+        @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+
+        .nano-light { position: absolute; width: 350px; height: 350px; background: radial-gradient(circle, rgba(255,105,180,0.2) 0%, rgba(255,192,203,0) 70%); border-radius: 50%; filter: blur(30px); z-index: 2; animation: floatGlow 6s infinite alternate ease-in-out; }
+        .light-1 { top: -50px; left: -50px; } .light-2 { bottom: -100px; right: -50px; animation-delay: -3s; }
+        @keyframes floatGlow { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 30px) scale(1.1); } }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 182, 193, 0.6); border-radius: 35px; padding: 35px 25px;
+            text-align: center; box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
+            z-index: 10; width: 92%; max-width: 400px; margin-bottom: 40px; position: relative; overflow: hidden;
+            animation: popIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .glass-box::before {
+            content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg); animation: glassShine 4s infinite; z-index: -1;
+        }
+        @keyframes glassShine { 0% { left: -150%; } 20% { left: 150%; } 100% { left: 150%; } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+
+        h1 { font-family: 'Fredoka One', cursive; font-size: 2.2em; color: #ff4081; text-shadow: 2px 2px 0px #fff, 0 0 10px rgba(255, 64, 129, 0.2); margin-bottom: 20px; }
+        input, select { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #ffb6c1; border-radius: 20px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; outline: none; text-align: center; color: #d81b60; cursor: pointer; }
+        button.main-btn { background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); color: white; border: none; padding: 15px; border-radius: 25px; font-size: 18px; font-family: 'Fredoka One', cursive; cursor: pointer; margin-top: 15px; width: 100%; transition: 0.4s; box-shadow: 0 8px 15px rgba(255, 117, 140, 0.4); }
+        button.main-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(255, 117, 140, 0.5); }
+        
+        .link-output { margin-top: 20px; background: #fff0f5; border: 2px dashed #ff4081; padding: 12px; border-radius: 15px; font-size: 12px; word-break: break-all; color: #c2185b; display: none; font-weight: 700; cursor: pointer; }
+
+        /*  FIXED: Mascot GIF is now fully inside the box, so it won't get cut off! */
+        .mascot-gif { width: 120px; height: 120px; border-radius: 50%; background: #fff; padding: 5px; margin: 0 auto 20px auto; border: 3px solid #ffb6c1; box-shadow: 0 10px 20px rgba(255,105,180,0.3); object-fit: cover; }
+        
+        .chat-text { font-size: 20px; font-weight: 700; line-height: 1.6; margin-bottom: 15px; color: #d81b60; opacity: 0; animation: slideUp 0.4s forwards; }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+
+        .typing-indicator span { display: inline-block; width: 8px; height: 8px; background-color: #ff4081; border-radius: 50%; margin: 0 2px; animation: bounceDots 1.4s infinite ease-in-out both; }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; } .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounceDots { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        .live-timer { font-size: 80px !important; font-family: 'Fredoka One', cursive; color: #ff0844; text-shadow: 0 8px 15px rgba(255, 8, 68, 0.3); margin-top: 10px; margin-bottom: 10px; animation: popCount 1s ease-in-out forwards; }
+        @keyframes popCount { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+
+        .btn-group { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .story-btn { background: #ff758c; color: white; border: none; padding: 12px 30px; border-radius: 25px; font-family: 'Fredoka One', cursive; font-size: 16px; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 10px rgba(255, 117, 140, 0.3); } .story-btn.no { background: #ffb6c1; color: #d81b60; }
+
+        /*  FIXED: Final Icon (Cake) is also fully inside the box */
+        .final-icon { width: 140px; margin: 0 auto 15px auto; animation: floatIcon 3s ease-in-out infinite; filter: drop-shadow(0 10px 10px rgba(255,105,180,0.3)); }
+        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        .happy-bday-text { width: 90%; margin: 0 auto 15px auto; display: block; filter: drop-shadow(0 5px 5px rgba(255,105,180,0.2)); }
+        .dynamic-name { font-size: 3.5em; color: #ff0844; font-family: 'Dancing Script', cursive; font-weight: 700; margin-bottom: 5px; text-shadow: 2px 2px 5px rgba(255,8,68,0.2); }
+
+        .share-container { margin-top: 20px; padding-top: 15px; border-top: 2px dashed #ffb6c1; }
+        .share-title { font-size: 13px; font-weight: 700; color: #ff4081; margin-bottom: 10px; }
+        .social-icons { display: flex; justify-content: center; gap: 12px; margin-bottom: 15px; }
+        .social-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 18px; cursor: pointer; text-decoration: none; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .social-btn:hover { transform: translateY(-3px); } .bg-wa { background: #25D366; } .bg-fb { background: #1877F2; } .bg-tg { background: #0088cc; } .bg-ig { background: #E1306C; }
+        
+        .download-btn { background: #ff4081; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; transition: 0.3s; }
+        .download-btn:hover { background: #d81b60; }
+
+        #emoji-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 50; }
+        .falling-emoji { position: absolute; font-size: 25px; animation: fall linear forwards; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+        #welcome-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 192, 203, 0.95); backdrop-filter: blur(10px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100; cursor: pointer; transition: 0.5s; }
+        .gift-box-icon { width: 150px; animation: shakeGift 2s infinite; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
+        @keyframes shakeGift { 0%, 100% {transform: rotate(0deg);} 25% {transform: rotate(-5deg) scale(1.05);} 50% {transform: rotate(5deg) scale(1.05);} 75% {transform: rotate(-5deg) scale(1.05);} }
+        .tap-text { font-size: 22px; font-family: 'Fredoka One', cursive; color: #fff; margin-top: 20px; text-shadow: 0 4px 8px rgba(216, 27, 96, 0.4); animation: pulseBeat 1.5s infinite; }
+        @keyframes pulseBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        .ticker-wrap { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 64, 129, 0.9); color: white; padding: 8px 0; z-index: 200; overflow: hidden; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
+        .ticker { display: inline-block; white-space: nowrap; padding-left: 100%; animation: tickerScroll 25s linear infinite; } .ticker span { padding-right: 50px; }
+        @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <audio id="copySound" src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/Sound/jonzuazu-copy-paste-mac_01-238230.mp3"></audio>
+    <audio id="bgMusic" src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/Sound/nastelbom-happy-birthday-469282.mp3" loop></audio>
+    <audio id="tickSound" src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/Sound/5-second-countdown.mp3"></audio>
+    <audio id="typingSound" src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/Sound/virtualzero-keyboard-typing-fast-371229.mp3" loop></audio>
+    <audio id="tapSound" src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/Sound/lucadialessandro-tap-notification-180637.mp3"></audio>
+
+    <div id="floating-bg-container"></div>
+    <div class="nano-light light-1"></div>
+    <div class="nano-light light-2"></div>
+
+    <div class="glass-box" id="generator-ui">
+        <h1>Create a Wish </h1>
+        <p style="color: #ff80ab; font-weight: 600; font-size: 14px; margin-bottom: 15px;">Enter details to generate a special link!</p>
+        <input type="text" id="nameInput" placeholder="Name (e.g., Mainul)">
+        <input type="text" id="rlsInput" placeholder="Relationship (e.g., Mine)">
+        
+        <select id="langInput">
+            <option value="en">Language: English</option>
+            <option value="bn">Language: Banglish</option>
+        </select>
+
+        <button class="main-btn" onclick="generateLink()">Create Magic </button>
+        
+        <div class="link-output" id="result-link" onclick="copyLink()"></div>
+        <p id="copyMsg" style="color: #00b894; font-size: 12px; margin-top: 10px; font-weight: 700; display: none;">
+             Link Copied! <br><span style="color:#d81b60; font-size:11px;">Link copy kore je kono browser e paste korun.</span>
+        </p>
+
+        <div id="gen-share-container" class="hidden share-container">
+            <p class="share-title">Send Link Directly </p>
+            <div class="social-icons" style="margin-bottom: 0;">
+                <a href="#" class="social-btn bg-wa" onclick="shareGenLink('wa')"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="social-btn bg-fb" onclick="shareGenLink('fb')"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-btn bg-tg" onclick="shareGenLink('tg')"><i class="fab fa-telegram-plane"></i></a>
+                <a href="#" class="social-btn bg-ig" onclick="copyGenLinkForIg()"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="welcome-screen" class="hidden" onclick="startStory()">
+        <img src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/pic/15605-removebg-preview.png" class="gift-box-icon">
+        <div class="tap-text">TAP TO OPEN </div>
+    </div>
+
+    <div class="glass-box hidden" id="story-ui">
+        <img id="mascot" class="mascot-gif" src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/58e9173a-221a-4607-903f-7b330e880630.gif">
+        <div id="chat-container"></div>
+        <div class="btn-group hidden" id="question-btns">
+            <button class="story-btn" onclick="nextStep()">I Promise </button>
+            <button class="story-btn no" id="no-btn" onmouseover="dodgeNo()">No </button>
+        </div>
+    </div>
+
+    <div class="glass-box hidden" id="wish-ui">
+        <img src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/pic/15641-removebg-preview.png" crossorigin="anonymous" class="final-icon">
+        <img src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/pic/%E2%80%94Pngtree%E2%80%94happy%20birthday%20text%20vector_6504386.png" crossorigin="anonymous" class="happy-bday-text">
+        
+        <div class="dynamic-name" id="displayName"></div>
+        <p style="margin: 10px 0 15px 0; font-size: 16px; font-weight: 700; color: #d81b60;">To my favorite <span id="displayRls" style="color:#ff0844;"></span> </p>
+        <p style="font-size: 14px; font-weight: 600; color: #ff758c; margin-bottom: 20px; padding: 0 10px;">May your day be filled with endless joy, smiles, and pink magic! </p>
+        <div style="display:flex; justify-content:center; gap:15px; align-items:center; margin-bottom: 20px;">
+            <img src="https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/pic/15636-removebg-preview.png" crossorigin="anonymous" style="width:35px; animation: pulseBeat 2s infinite;">
+            <span style="font-size:30px;"></span>
+            <span style="font-size:30px;"></span>
+            <span style="font-size:30px;"></span>
+        </div>
+
+        <div class="share-container" data-html2canvas-ignore="true">
+            <p class="share-title">Share this Card </p>
+            <div class="social-icons">
+                <a href="#" class="social-btn bg-wa" onclick="shareSocial('wa')"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="social-btn bg-fb" onclick="shareSocial('fb')"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-btn bg-tg" onclick="shareSocial('tg')"><i class="fab fa-telegram-plane"></i></a>
+                <a href="#" class="social-btn bg-ig" onclick="copyForIg()"><i class="fab fa-instagram"></i></a>
+            </div>
+            <button class="download-btn" onclick="downloadCard()"><i class="fas fa-download"></i> Download Card</button>
+        </div>
+    </div>
+
+    <div id="emoji-container"></div>
+
+    <div class="ticker-wrap">
+        <div class="ticker">          
+            <span> <b>Copyright (c) 2026 MAINUL - X</b> &nbsp; | &nbsp;  Author: Md. Mainul Islam &nbsp; | &nbsp;  Owner: MAINUL - X &nbsp; | &nbsp;  WhatsApp: +8801308850528 &nbsp; | &nbsp;  Telegram: @mdmainulislaminfo &nbsp; | &nbsp;  Email: githubmainul@gmail.com &nbsp; | &nbsp;  GitHub: https://github.com/M41NUL &nbsp; | &nbsp; Tool Version: 1.0.1</span>
+        </div>
+    </div>
+    <script>
+        // --- Setup and URL Parsing ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlName = urlParams.get('n');
+        const urlRls = urlParams.get('r');
+        const urlLang = urlParams.get('l') || 'en';
+
+        // Check if user is on the generated link or generator UI
+        if (urlName && urlRls) {
+            document.getElementById('generator-ui').classList.add('hidden');
+            document.getElementById('welcome-screen').classList.remove('hidden');
+            createFloatingBackground();
+        } else {
+            createFloatingBackground(); // Show background effects on generator too
+        }
+
+        // --- Background Floating Hearts ---
+        function createFloatingBackground() {
+            const container = document.getElementById('floating-bg-container');
+            const icons = ['', '', '', ''];
+            
+            for (let i = 0; i < 15; i++) {
+                let icon = document.createElement('div');
+                icon.className = 'bg-float-icon';
+                icon.innerText = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.left = Math.random() * 100 + 'vw';
+                icon.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                icon.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(icon);
+            }
+        }
+
+        // --- Link Generation & Generator UI Sharing ---
+        function generateLink() {
+            const n = document.getElementById('nameInput').value.trim();
+            const r = document.getElementById('rlsInput').value.trim();
+            const lang = document.getElementById('langInput').value;
+            
+            if(!n || !r) return;
+            
+            const finalUrl = `${window.location.origin}${window.location.pathname}?n=${encodeURIComponent(n)}&r=${encodeURIComponent(r)}&l=${lang}`;
+            const linkBox = document.getElementById('result-link');
+            
+            linkBox.innerText = finalUrl;
+            linkBox.style.display = 'block';
+            linkBox.style.animation = 'popIn 0.3s ease-out';
+
+            // Show generator share buttons
+            document.getElementById('gen-share-container').classList.remove('hidden');
+        }
+
+        function copyLink() {
+            const linkText = document.getElementById('result-link').innerText;
+            if(!linkText) return;
+
+            navigator.clipboard.writeText(linkText).then(() => {
+                document.getElementById('copySound').play().catch(()=>{});
+                const msg = document.getElementById('copyMsg');
+                msg.style.display = 'block';
+                msg.style.animation = 'slideUp 0.3s forwards';
+                setTimeout(() => { msg.style.display = 'none'; }, 4000);
+            });
+        }
+
+        // Share buttons inside Generator UI
+        function shareGenLink(platform) {
+            const linkText = document.getElementById('result-link').innerText;
+            if(!linkText) return alert("Please generate the link first!");
+            
+            const n = document.getElementById('nameInput').value.trim();
+            const text = encodeURIComponent(`I made a magical birthday wish for ${n}!  Open it here: `);
+            const shareUrl = encodeURIComponent(linkText);
+            
+            openShareLink(platform, text, shareUrl);
+        }
+
+        function copyGenLinkForIg() {
+            copyLink();
+            setTimeout(() => alert("Link copied! Open Instagram to share it in your bio or DMs. "), 500);
+        }
+
+        // --- Story Data ---
+        let currentStep = 0;
+        let chatContainer = document.getElementById('chat-container');
+        let mascot = document.getElementById('mascot');
+
+        // English Texts
+        const stepsEn = [
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/58e9173a-221a-4607-903f-7b330e880630.gif", texts: [`Hi, ${urlName}! `, `Another year of you being the most beautiful soul I know. `] },
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/7608cb9d-41dc-410e-804f-dfc559897d2d.gif", texts: [`I have something small, but it’s filled with all my heart... `, `Do you promise to keep it safe? `], showButtons: true },
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/88020618-b11d-4e60-94a6-d6624274d08a.gif", texts: [`Now, take a deep breath and just let go... `, `Close your eyes and count to 5 for me. `], countdown: true },
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Milk%20And%20Mocha%20Sticker%20%E2%80%93%20Milk%20and%20mocha%20%E2%80%93%20GIF-ek%20felfedez%C3%A9se%20%C3%A9s%20megoszt%C3%A1sa.gif", texts: [`Oh no... it seems the universe isn't ready to let go of such a precious gift yet! `, `It got lost somewhere in the stars... `, `Life is so unfair sometimes, isn't it? `] },
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Kiss%20GIF%20-%20Kiss%20-%20Discover%20%26%20Share%20GIFs.gif", texts: [`But then I realized... the gift was never a thing, it was always YOU. `, `You are my favorite piece of magic in this world! `], finishPrank: true }
+        ];
+
+        // Banglish Texts
+        const stepsBn = [
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/58e9173a-221a-4607-903f-7b330e880630.gif", texts: [`, ${urlName}! `, `Amar dekha prithibir sobcheye sundor moner manush tumi. `] },
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/7608cb9d-41dc-410e-804f-dfc559897d2d.gif", texts: [`Tomar jonno chotto kintu onek valobashay vora akta gift ache... `, `Kotha dao jotno kore rakhbe? `], showButtons: true },
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/88020618-b11d-4e60-94a6-d6624274d08a.gif", texts: [`Ebar lomba akta nisshash nao... `, `Chokh bondho kore amr jonno 5 porjonto gono. `], countdown: true },
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Milk%20And%20Mocha%20Sticker%20%E2%80%93%20Milk%20and%20mocha%20%E2%80%93%20GIF-ek%20felfedez%C3%A9se%20%C3%A9s%20megoszt%C3%A1sa.gif", texts: [`Eki... ei prithibi bodhoy eto sundor gift ta tomake dite chachche na! `, `Tarader deshe kothay jeno haraye gelo... `, `Jibon ta majhe majhe onek nishthur, tai na? `] },
+            { gif: "https://raw.githubusercontent.com/M41NUL/birthday-wish-generator/main/GIF/Kiss%20GIF%20-%20Kiss%20-%20Discover%20%26%20Share%20GIFs.gif", texts: [`Kintu pore bujhlam... ashol gift to kono jinish na, ashol gift chila TUMI nijey. `, `Tumi amr prithibir sobcheye dami magic! `], finishPrank: true }
+        ];
+
+        const activeSteps = urlLang === 'bn' ? stepsBn : stepsEn;
+
+        // --- Story Execution ---
+        function startStory() {
+            // Tap to open sound
+            document.getElementById('tapSound').play().catch(()=>{});
+            
+            let welcomeScreen = document.getElementById('welcome-screen');
+            welcomeScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                welcomeScreen.classList.add('hidden');
+                document.getElementById('story-ui').classList.remove('hidden');
+                processStep();
+            }, 500);
+        }
+
+        async function processStep() {
+            if (currentStep >= activeSteps.length) return;
+            
+            let stepData = activeSteps[currentStep];
+            mascot.src = stepData.gif;
+            chatContainer.innerHTML = ''; 
+            document.getElementById('question-btns').classList.add('hidden');
+
+            // Show texts one by one with typing effect & typing sound
+            for (let i = 0; i < stepData.texts.length; i++) {
+                await showTypingIndicator(1200); 
+                appendChatText(stepData.texts[i]);
+                if (i < stepData.texts.length - 1) {
+                    await sleep(800); 
+                }
+            }
+
+            setTimeout(() => {
+                if (stepData.showButtons) {
+                    document.getElementById('question-btns').classList.remove('hidden');
+                } else if (stepData.countdown) {
+                    startCountdown();
+                } else if (stepData.finishPrank) {
+                    setTimeout(showFinalWish, 1500);
+                } else {
+                    setTimeout(nextStep, 1500);
+                }
+            }, 1000);
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function showTypingIndicator(duration) {
+            let indicator = document.createElement('div');
+            indicator.className = 'chat-text typing-indicator';
+            indicator.innerHTML = '<span></span><span></span><span></span>';
+            chatContainer.appendChild(indicator);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // Play typing sound
+            let typingAudio = document.getElementById('typingSound');
+            typingAudio.currentTime = 0;
+            typingAudio.play().catch(()=>{});
+
+            await sleep(duration);
+            
+            indicator.remove();
+            // Stop typing sound accurately
+            typingAudio.pause();
+        }
+
+        function appendChatText(text) {
+            let p = document.createElement('div');
+            p.className = 'chat-text';
+            p.innerHTML = text;
+            chatContainer.appendChild(p);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function nextStep() { currentStep++; processStep(); }
+        
+        function dodgeNo() {
+            let btn = document.getElementById('no-btn');
+            btn.style.position = 'absolute';
+            btn.style.left = (Math.random() * 60 + 10) + '%';
+            btn.style.top = (Math.random() * 60 + 10) + '%';
+        }
+
+        // --- Synced Live Pop-up Countdown (Fixed for 5s Audio Track) ---
+        function startCountdown() {
+            chatContainer.innerHTML = ''; 
+            let count = 5;
+            let countText = document.createElement('div');
+            countText.className = 'live-timer'; 
+            countText.innerText = count; 
+            chatContainer.appendChild(countText);
+            
+            // Play the 5-second voice/continuous audio JUST ONCE
+            let tickAudio = document.getElementById('tickSound');
+            tickAudio.currentTime = 0;
+            tickAudio.play().catch(()=>{});
+
+            let timer = setInterval(() => {
+                count--;
+                if (count === 0) { 
+                    clearInterval(timer); 
+                    countText.innerText = "";
+                    
+                    countText.style.animation = 'none';
+                    void countText.offsetWidth; 
+                    countText.style.animation = 'popCount 1s ease-in-out forwards';
+                    
+                    // Stop any leftover countdown audio just in case
+                    tickAudio.pause();
+                    
+                    setTimeout(nextStep, 1000); 
+                } else {
+                    countText.innerText = count;
+                    
+                    // Re-trigger the pop-up CSS animation without re-playing audio
+                    countText.style.animation = 'none';
+                    void countText.offsetWidth; 
+                    countText.style.animation = 'popCount 1s ease-in-out forwards';
+                }
+            }, 1000); // 1000ms ensures perfect sync with a 5 second audio file
+        }
+
+        // --- Final Surprise & Effects ---
+        function showFinalWish() {
+            document.getElementById('story-ui').classList.add('hidden');
+            document.getElementById('displayName').innerText = decodeURIComponent(urlName);
+            document.getElementById('displayRls').innerText = decodeURIComponent(urlRls);
+            document.getElementById('wish-ui').classList.remove('hidden');
+            
+            // Play final birthday music
+            let bgMusic = document.getElementById('bgMusic');
+            bgMusic.volume = 0.7;
+            bgMusic.play().catch(()=>{});
+            
+            fireConfetti();
+            startEmojiRain();
+        }
+
+        // --- Confetti Blast Logic ---
+        function fireConfetti() {
+            var duration = 4 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff9a9e', '#fecfef', '#ffffff']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff9a9e', '#fecfef', '#ffffff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        function startEmojiRain() {
+            const emojis = ['', '', '', '', '', '', '', '', '', '', ''];
+            const container = document.getElementById('emoji-container');
+            
+            setInterval(() => {
+                const emoji = document.createElement('div');
+                emoji.classList.add('falling-emoji');
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                emoji.style.left = Math.random() * 100 + 'vw';
+                const duration = Math.random() * 3 + 4; 
+                emoji.style.animationDuration = duration + 's';
+                emoji.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                
+                container.appendChild(emoji);
+                setTimeout(() => emoji.remove(), duration * 1000);
+            }, 300); 
+        }
+
+        // --- Final Screen Sharing ---
+        function shareSocial(platform) {
+            const shareUrl = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(`I made a magical birthday wish for ${decodeURIComponent(urlName)}!  Open it here: `);
+            openShareLink(platform, text, shareUrl);
+        }
+
+        function openShareLink(platform, text, shareUrl) {
+            let finalUrl = '';
+            if (platform === 'wa') finalUrl = `https://api.whatsapp.com/send?text=${text}${shareUrl}`;
+            else if (platform === 'fb') finalUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+            else if (platform === 'tg') finalUrl = `https://t.me/share/url?url=${shareUrl}&text=${text}`;
+            
+            if (finalUrl) window.open(finalUrl, '_blank');
+        }
+
+        function copyForIg() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert("Link copied! Open Instagram to share it in your bio or DMs. ");
+            });
+        }
+
+        // --- Screenshot Download (Fixed with Background and CORS) ---
+        function downloadCard() {
+            const card = document.getElementById('wish-ui');
+            const shareSection = card.querySelector('.share-container');
+            
+            // Hide the share buttons during screenshot
+            const originalDisplay = shareSection.style.display;
+            shareSection.style.display = 'none';
+
+            // Ensure solid background so elements don't appear transparent/white
+            const originalBg = card.style.background;
+            const originalBackdrop = card.style.backdropFilter;
+            const originalShadow = card.style.boxShadow;
+            
+            card.style.background = '#ffffff'; 
+            card.style.backdropFilter = 'none'; 
+            card.style.boxShadow = 'none'; 
+
+            html2canvas(card, {
+                useCORS: true, // Allows external images from GitHub
+                allowTaint: true,
+                backgroundColor: '#fecfef',
+                scale: 2
+            }).then(canvas => {
+                // Restore original styles
+                shareSection.style.display = originalDisplay;
+                card.style.background = originalBg;
+                card.style.backdropFilter = originalBackdrop;
+                card.style.boxShadow = originalShadow;
+
+                // Download the image
+                const link = document.createElement('a');
+                link.download = `Birthday_Wish_${decodeURIComponent(urlName)}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                console.error("Screenshot failed:", err);
+                shareSection.style.display = originalDisplay;
+                card.style.background = originalBg;
+                card.style.backdropFilter = originalBackdrop;
+                card.style.boxShadow = originalShadow;
+            });
+        }
+    </script>
